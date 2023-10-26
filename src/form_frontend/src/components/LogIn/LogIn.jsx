@@ -39,24 +39,18 @@ function LogIn() {
           try {
             const result = await value;
             setIsLogIn(!isLogIn);
-            console.log("New user registered");
           } catch (error) {
             setErrMsg("Username already exist");
-            console.log("Username already exist");
           }
         }
         handlePromise();
       }
     } else {
-      const msg = await form_backend.isCorrectPassword(formData.username);
-      console.log(msg);
-      if(msg == formData.pass) {
+      const msg = await form_backend.isCorrectPassword(formData.username, formData.pass);
+      if(msg == "Success") {
         navigate("/todo");
-        form_backend.setCurrentUser(formData.username);
-        console.log("Logged in successfully");
       } else {
-        setErrMsg("Username or Password is incorrect");
-        console.log("Username or Password is incorrect");
+        setErrMsg(msg);
       }
     }
   };

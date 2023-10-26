@@ -35,11 +35,7 @@ function Todo() {
         async function fetchData() {
             try {
                 const getPendingList1 = await form_backend.getPendingtodo();
-                console.log(getPendingList1);
-
                 const getCompletedList1 = await form_backend.getCompletedtodo();
-                console.log(getCompletedList1);
-
                 setPendingList(getPendingList1);
                 setCompletedList(getCompletedList1);
                 setCheckedItems(new Array(getPendingList1.length).fill(false));
@@ -51,16 +47,12 @@ function Todo() {
     }, [isClicked]);
 
     const navigate = useNavigate();
-    const handleLogout = () => {
-        form_backend.setCurrentUser("");
-        navigate("/");
-    };
 
     return (
         <div id="todoList">
             <div id="todol">
                 <h1>To-Do List</h1>
-                <button type="button" onClick={handleLogout} id="logout">Log Out</button>
+                <button type="button" onClick={() => navigate("/")} id="logout">Log Out</button>
             </div>
             <div id="todo">
                 <div id="todo1">

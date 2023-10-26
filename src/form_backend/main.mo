@@ -40,16 +40,19 @@ actor UserRegistration {
   };
 
   // this function will return the password from backend to frontend
-  public query func isCorrectPassword(username : Text) : async Text {
-    let value : Text = switch (usersByUsername.get(username)) {
+  public func isCorrectPassword(username : Text, password: Text) : async Text {
+    switch (usersByUsername.get(username)) {
       case (null) {
-        return "";
+        return "User doesn't exist";
       };
       case (?result) {
-        return result.pass;
+        if(result.pass == password) {
+          currentUser := username;
+          return "Success";
+        };
+        return "Username or Password is incorrent";
       };
     };
-    return value;
   };
 
   // Function to register a new user
@@ -72,10 +75,6 @@ actor UserRegistration {
     return value;
   };
 
-  // function to set current user which will save time. We don't have to fetch user again and again.
-  public func setCurrentUser(username : Text) : async () {
-    currentUser := username;
-  };
 
   public func getCurrentUser() : async Text {
     return currentUser;
