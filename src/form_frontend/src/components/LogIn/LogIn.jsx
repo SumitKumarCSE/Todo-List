@@ -34,16 +34,14 @@ function LogIn() {
       } else if(formData.confirmpass.length < 5) {
         setErrMsg("Minimum password length is 6");
       } else {
-        let value = form_backend.registerUser(formData.username, formData.pass);
-        async function handlePromise() {
-          try {
-            const result = await value;
-            setIsLogIn(!isLogIn);
-          } catch (error) {
-            setErrMsg("Username already exist");
-          }
-        }
-        handlePromise();
+        // Perform user registration and handle promise resolution or rejection
+        form_backend.registerUser(formData.username, formData.pass)
+          .then((result) => {
+            setIsLogIn(true); // Set login state to true upon successful registration
+          })
+          .catch((error) => {
+            setErrMsg("Username already exists"); // Set error message for existing username
+          });
       }
     } else {
       const msg = await form_backend.isCorrectPassword(formData.username, formData.pass);
